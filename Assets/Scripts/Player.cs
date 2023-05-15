@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
         var gripValue = _gripAction.action.ReadValue<float>();
         var actionValue = _activateAction.action.ReadValue<float>();
 
+        gripValue = gripValue < 0.5f ? 0.5f : gripValue;
+
         _animator.SetFloat(GRIP, gripValue);
         _animator.SetFloat(TRIGGER, actionValue);
 
