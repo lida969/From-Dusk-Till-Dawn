@@ -47,6 +47,7 @@ public class EnemyAI : MonoBehaviour
                 if (Vector3.Distance(gameObject.transform.position, _roamPosition) <= _reachedPointDistance)
                 {
                     _roamPosition = GenerateRoamPosition();
+                    
                 }
 
                 _aiDestinationSetter.target = _roamTerget.transform;
@@ -55,25 +56,15 @@ public class EnemyAI : MonoBehaviour
 
                 break;
 
-            case EnemyStates.Following:
-                _aiDestinationSetter.target = _player.transform;
-
-                if(Vector3.Distance(gameObject.transform.position, _player.transform.position) < _enemyAttack.AttackRange)
-                {
-                    _enemyAttack.TryAttackPlayer();
-                }
-                if (Vector3.Distance (gameObject.transform.position, _player.transform.position) > _stopTargetFollowingRange)
-                {
-                    _currentState = EnemyStates.Roaming;
-                }
-                break;
+            
         }
     }
     private void TryFindPlayer()
     {
         if (Vector3.Distance(gameObject.transform.position, _player.transform.position) <= _targetFollowRange)
-        {
+        {            
             _currentState = EnemyStates.Following;
+            
         }
     }
     private Vector3 GenerateRoamPosition()
@@ -90,10 +81,13 @@ public class EnemyAI : MonoBehaviour
     {
         var newDirection = new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f,1f));
         return newDirection;
+        
     }
     public enum EnemyStates
     {
         Roaming,
         Following
     }
+  
+
 }
