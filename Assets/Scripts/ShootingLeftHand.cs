@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class SSSSShoot : MonoBehaviour
+public class ShootingLeftHand : MonoBehaviour
 {
     //bullet 
     public GameObject bullet;
@@ -55,7 +55,7 @@ public class SSSSShoot : MonoBehaviour
     }
     private void MyInput()
     {
-        var device = InputDevices.GetDeviceAtXRNode(XRNode.GameController);
+        var device = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
 
         if (readyToShoot && !reloading && bulletsLeft <= 0) Reload();
 
