@@ -107,7 +107,7 @@ public class ShootingLeftHand : MonoBehaviour
 
         //Add forces to bullet
         currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
-        currentBullet.GetComponent<Rigidbody>().AddForce(fpsCam.transform.up * upwardForce, ForceMode.Impulse);
+        currentBullet.GetComponent<Rigidbody>().AddForce(attackPoint.up * upwardForce, ForceMode.Impulse);
 
         //Instantiate muzzle flash, if you have one
         if (muzzleFlash != null)

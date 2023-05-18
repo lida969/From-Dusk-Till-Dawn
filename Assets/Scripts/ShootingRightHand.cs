@@ -26,7 +26,7 @@ public class ShootingRightHand : MonoBehaviour
     bool readyToShoot, reloading;
 
     //Reference
-    //public Camera fpsCam;
+    public Camera fpsCam;
     public Transform attackPoint;
 
     //Graphics
@@ -79,8 +79,8 @@ public class ShootingRightHand : MonoBehaviour
         readyToShoot = false;
 
         //Find the exact hit position using a raycast
-        Ray ray = new Ray(attackPoint.position, attackPoint.forward);
-        //Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
+        //Ray ray = new Ray(attackPoint.position, attackPoint.forward);
+        Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
         RaycastHit hit;
 
         //check if ray hits something
@@ -107,7 +107,7 @@ public class ShootingRightHand : MonoBehaviour
 
         //Add forces to bullet
         currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
-        currentBullet.GetComponent<Rigidbody>().AddForce(fpsCam.transform.up * upwardForce, ForceMode.Impulse);
+        currentBullet.GetComponent<Rigidbody>().AddForce(attackPoint.up * upwardForce, ForceMode.Impulse);
 
         //Instantiate muzzle flash, if you have one
         if (muzzleFlash != null)
