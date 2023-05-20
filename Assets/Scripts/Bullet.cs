@@ -89,10 +89,11 @@ public class Bullet : MonoBehaviour
         physics_mat.frictionCombine = PhysicMaterialCombine.Minimum;
         physics_mat.bounceCombine = PhysicMaterialCombine.Maximum;
         //Assign material to collider
-        GetComponent<SphereCollider>().material = physics_mat;
+        GetComponent<Collider>().material = physics_mat;
 
         //Set gravity
         rb.useGravity = useGravity;
+        GetComponent<Rigidbody>().AddForce(-transform.forward, ForceMode.Impulse);
     }
 
     /// Just to visualize the explosion range

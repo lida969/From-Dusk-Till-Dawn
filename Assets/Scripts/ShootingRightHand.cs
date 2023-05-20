@@ -26,7 +26,7 @@ public class ShootingRightHand : MonoBehaviour
     bool readyToShoot, reloading;
 
     //Reference
-    public Camera fpsCam;
+    //public Camera fpsCam;
     public Transform attackPoint;
 
     //Graphics
@@ -56,7 +56,6 @@ public class ShootingRightHand : MonoBehaviour
     private void MyInput()
     {
         var device = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
-
         if (readyToShoot && !reloading && bulletsLeft <= 0) Reload();
 
         //Shooting
@@ -79,9 +78,10 @@ public class ShootingRightHand : MonoBehaviour
         readyToShoot = false;
 
         //Find the exact hit position using a raycast
-        //Ray ray = new Ray(attackPoint.position, attackPoint.forward);
-        Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
+        Ray ray = new Ray(attackPoint.position, -attackPoint.forward);
+        //Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
         RaycastHit hit;
+
 
         //check if ray hits something
         Vector3 targetPoint;
@@ -93,21 +93,13 @@ public class ShootingRightHand : MonoBehaviour
         //Calculate direction from attackPoint to targetPoint
         Vector3 directionWithoutSpread = targetPoint - attackPoint.position;
 
-        //Calculate spread
-        float x = Random.Range(-spread, spread);
-        float y = Random.Range(-spread, spread);
-
-        //Calculate new direction with spread
-        Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, 0); //Just add spread to last direction
-
         //Instantiate bullet/projectile
-        GameObject currentBullet = Instantiate(bullet, attackPoint.position, Quaternion.identity); //store instantiated bullet in currentBullet
-        //Rotate bullet to shoot direction
-        currentBullet.transform.forward = directionWithSpread.normalized;
+        GameObject currentBullet = Instantiate(bullet, attackPoint);  //store instantiated bullet in currentBullet
+                                                                      //Rotate bullet to shoot direction
+
 
         //Add forces to bullet
-        currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
-        currentBullet.GetComponent<Rigidbody>().AddForce(attackPoint.up * upwardForce, ForceMode.Impulse);
+
 
         //Instantiate muzzle flash, if you have one
         if (muzzleFlash != null)
@@ -123,7 +115,7 @@ public class ShootingRightHand : MonoBehaviour
             allowInvoke = false;
 
             //Add recoil to player (should only be called once)
-            playerRb.AddForce(-directionWithSpread.normalized * recoilForce, ForceMode.Impulse);
+            playerRb.AddForce(-directionWithoutSpread.normalized * recoilForce, ForceMode.Impulse);
         }
 
         //if more than one bulletsPerTap make sure to repeat shoot function

@@ -53,7 +53,7 @@ public class ShootingLeftHand : MonoBehaviour
         if (ammunitionDisplay != null)
             ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
     }
-    private void MyInput()
+    virtual protected void MyInput()
     {
         var device = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
 
@@ -74,12 +74,12 @@ public class ShootingLeftHand : MonoBehaviour
 
     }
 
-    private void Shoot()
+    virtual protected void Shoot()
     {
         readyToShoot = false;
 
         //Find the exact hit position using a raycast
-        Ray ray = new Ray(attackPoint.position, attackPoint.forward);
+        Ray ray = new Ray(attackPoint.position, -attackPoint.forward);
         //Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
         RaycastHit hit;
 
@@ -93,21 +93,12 @@ public class ShootingLeftHand : MonoBehaviour
         //Calculate direction from attackPoint to targetPoint
         Vector3 directionWithoutSpread = targetPoint - attackPoint.position;
 
-        //Calculate spread
-        float x = Random.Range(-spread, spread);
-        float y = Random.Range(-spread, spread);
-
-        //Calculate new direction with spread
-        Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, 0); //Just add spread to last direction
-
         //Instantiate bullet/projectile
-        GameObject currentBullet = Instantiate(bullet, attackPoint.position, Quaternion.identity); //store instantiated bullet in currentBullet
-        //Rotate bullet to shoot direction
-        currentBullet.transform.forward = directionWithSpread.normalized;
+        GameObject currentBullet = Instantiate(bullet, attackPoint); //store instantiated bullet in currentBullet
 
         //Add forces to bullet
-        currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
-        currentBullet.GetComponent<Rigidbody>().AddForce(attackPoint.up * upwardForce, ForceMode.Impulse);
+        //currentBullet.GetComponent<Rigidbody>().AddForce(currentBullet.transform.forward * shootForce, ForceMode.VelocityChange);
+        //currentBullet.GetComponent<Rigidbody>().AddForce(attackPoint.up * upwardForce, ForceMode.Impulse);
 
         //Instantiate muzzle flash, if you have one
         if (muzzleFlash != null)
@@ -123,7 +114,7 @@ public class ShootingLeftHand : MonoBehaviour
             allowInvoke = false;
 
             //Add recoil to player (should only be called once)
-            playerRb.AddForce(-directionWithSpread.normalized * recoilForce, ForceMode.Impulse);
+            playerRb.AddForce(-directionWithoutSpread.normalized * recoilForce, ForceMode.Impulse);
         }
 
         //if more than one bulletsPerTap make sure to repeat shoot function

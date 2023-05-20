@@ -3,15 +3,18 @@ using System.Collections;
 
 public class EnemyHealth : MonoBehaviour
 {
+    private Animator _animator;
 
-    public float HP = 1;
-
-    public void AddDamage(float damage)
+    private void Start()
     {
-        HP -= damage;
-        if (HP <= 0)
+        _animator = GetComponent<Animator>();
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
         {
-            Destroy(gameObject);
+            _animator.SetTrigger("death");
+            GetComponent<PlayerMove>().enabled = false;
         }
     }
 }

@@ -13,7 +13,7 @@ public class GunSystem : MonoBehaviour
     int bulletsLeft, bulletsShot;
 
     //bools 
-    bool shooting, readyToShoot;
+    //bool shooting, readyToShoot;
     bool triggerPressed=false;
 
     //Reference
@@ -28,7 +28,7 @@ public class GunSystem : MonoBehaviour
     private void Awake()
     {
         
-        readyToShoot = true;
+        //readyToShoot = true;
     }
     private void Update()
     {
@@ -57,7 +57,7 @@ public class GunSystem : MonoBehaviour
     }
     private void Shoot()
     {
-        readyToShoot = false;
+        //readyToShoot = false;
 
         Vector3 direction = attackPoint.forward;
 
@@ -65,8 +65,8 @@ public class GunSystem : MonoBehaviour
         if (Physics.Raycast(attackPoint.position, direction, out rayHit, range, whatIsEnemy))
         {
            
-            if (rayHit.collider.CompareTag("Enemy"))
-                rayHit.collider.GetComponent<EnemyHealth>().AddDamage(damage);
+            //if (rayHit.collider.CompareTag("Enemy"))
+                //rayHit.collider.GetComponent<EnemyHealth>().AddDamage(damage);
         }
 
 
