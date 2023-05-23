@@ -4,6 +4,7 @@ using System.Collections;
 public class EnemyHealth : MonoBehaviour
 {
     private Animator _animator;
+    bool _alive = true;
 
     private void Start()
     {
@@ -15,6 +16,7 @@ public class EnemyHealth : MonoBehaviour
         {
             _animator.SetTrigger("death");
             GetComponent<PlayerMove>().enabled = false;
+            _alive = false;
         }
     }
 }

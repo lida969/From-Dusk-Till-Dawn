@@ -47,7 +47,6 @@ public class EnemyAI : MonoBehaviour
                 if (Vector3.Distance(gameObject.transform.position, _roamPosition) <= _reachedPointDistance)
                 {
                     _roamPosition = GenerateRoamPosition();
-                    
                 }
 
                 _aiDestinationSetter.target = _roamTerget.transform;
@@ -55,8 +54,9 @@ public class EnemyAI : MonoBehaviour
                 TryFindPlayer();
 
                 break;
-
             
+
+
         }
     }
     private void TryFindPlayer()
