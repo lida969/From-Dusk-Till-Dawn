@@ -6,7 +6,7 @@ public class PlayerMove : MonoBehaviour
 {
 
     public float speed = 8f;
-
+    
    
     private const float TIMER_MAX_TIME = 14f;
     private float timerCurrentTime = TIMER_MAX_TIME; 
@@ -21,8 +21,13 @@ public class PlayerMove : MonoBehaviour
         {
            
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
-             
+            
+
+
         }
+
+        
+
     }
    
 }
