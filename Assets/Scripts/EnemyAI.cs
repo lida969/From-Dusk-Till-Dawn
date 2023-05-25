@@ -20,7 +20,7 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private float _stopTargetFollowingRange;
 
-    [SerializeField] private AIDestinationSetter _aiDestinationSetter;
+    //[SerializeField] private AIDestinationSetter _aiDestinationSetter;
 
     private Player _player;
 
@@ -49,7 +49,7 @@ public class EnemyAI : MonoBehaviour
                     _roamPosition = GenerateRoamPosition();
                 }
 
-                _aiDestinationSetter.target = _roamTerget.transform;
+                //_aiDestinationSetter.target = _roamTerget.transform;
 
                 TryFindPlayer();
 
