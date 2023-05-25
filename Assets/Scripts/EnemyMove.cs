@@ -12,6 +12,12 @@ public class EnemyMove : MonoBehaviour
 
     public float closeRange = 10f;
 
+    private void Start()
+    {
+        transform.Rotate(0.0f, -90.0f, 0.0f, Space.Self);
+    }
+
+
     void Update()
     {
         var player = FindObjectOfType<Player>();
