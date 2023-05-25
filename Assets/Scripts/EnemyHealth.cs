@@ -22,7 +22,10 @@ public class EnemyHealth : MonoBehaviour
             _animator.SetTrigger("death");
             //_collider.enabled = false;
             _enemyMove.enabled = false;
-            score += 5;
+            /*if (_animator.SetTrigger("death"))
+            {
+
+            }*/
             Destroy(gameObject, 2f);
         }
     }

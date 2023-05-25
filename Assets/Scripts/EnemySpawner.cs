@@ -7,12 +7,17 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefab;
     GameObject _position;
     [SerializeField] private GameObject _spawnLine;
-    [SerializeField] private GameObject _spawnLine2;
-    
+
+    private int MAX_ENEMIES;
 
     [SerializeField] private float _spawnInterval;
     private float _currentSpawnTimer;
     [SerializeField] private int countEnemies;
+
+    private void Start()
+    {
+        MAX_ENEMIES = countEnemies;
+    }
 
     private void Update()
     {
@@ -41,6 +46,9 @@ private void Spawner()
         _enemyPos.rotation = rotation;
         Destroy(_position);
         Instantiate(_enemyPrefab, _enemyPos.position, Quaternion.identity);
+        this.gameObject.SetActive(true);
+
+
     }
 
 } 
