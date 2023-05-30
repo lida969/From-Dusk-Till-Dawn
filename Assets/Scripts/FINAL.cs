@@ -5,6 +5,7 @@ using UnityEngine;
 public class FINAL : MonoBehaviour
 {
     [SerializeField] Transform teleportPoint;
+    [SerializeField] Transform menuPoint;
     private PlayerMove _playerMove;
 
     private void Start()
@@ -15,9 +16,12 @@ public class FINAL : MonoBehaviour
     {
         if (transform.position.x >= teleportPoint.position.x)
         {
-            this.transform.position = new Vector3(468.6271f, 49.79527f, 644.1874f);
+            transform.position = menuPoint.position;
+            GetComponent<ShootingLeftHand>().enabled = false;
+            GetComponent<ShootingRightHand>().enabled = false;
             transform.Rotate(0.0f, -180.0f, 0.0f, Space.Self);
             _playerMove.enabled = false;
+            
         }
     }
 }

@@ -5,9 +5,12 @@ using UnityEngine;
 public class ShooterLogic : MonoBehaviour
 {
     [SerializeField] private EnemyShoot _enemyShoot;
-    public Player _player;
+    [SerializeField] public Player _player;
     private EnemyStates _currentState;
     Vector3 _newPos;
+    private EnemyHealth dead;
+    public GameObject _prefab;
+    
 
     void Start()
     {
@@ -38,7 +41,10 @@ public class ShooterLogic : MonoBehaviour
         }
         var _playerPos = _player.transform.position;
         transform.LookAt(new Vector3(_playerPos.x, transform.position.y, _playerPos.z));
-        
+        if (dead == true)
+        {
+            _prefab.SetActive(false);
+        }
     }
 
     public enum EnemyStates

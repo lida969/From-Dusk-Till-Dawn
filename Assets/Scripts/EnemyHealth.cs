@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
     private Collider _collider;
     private EnemyMove _enemyMove;
     public static int score;
+    public bool dead = false;
 
     private void Start()
     {
@@ -17,16 +18,13 @@ public class EnemyHealth : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (collision.gameObject.CompareTag("Bullet") && dead==false)
         {
             _animator.SetTrigger("death");
-            //_collider.enabled = false;
-            _enemyMove.enabled = false;
-            /*if (_animator.SetTrigger("death"))
-            {
-
-            }*/
+            _enemyMove.enabled = false;    
             Destroy(gameObject, 2f);
+            score = score + 5;
+            dead = true;
         }
     }
 }

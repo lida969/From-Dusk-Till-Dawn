@@ -9,6 +9,7 @@ public class EnemyShoot : MonoBehaviour
     [SerializeField] private float _coolDown;
     public Transform enemyGunPoint;
     public GameObject bullet;
+    public EnemyHealth dead;
 
 
     private float _timer;
@@ -20,7 +21,7 @@ public class EnemyShoot : MonoBehaviour
     private const float TIMER_MAX_TIME = 80000f;
     private float timerCurrentTime = TIMER_MAX_TIME;
 
-    public Rigidbody playerRb;
+    
     public float recoilForce;
     bool readyToShoot;
     public bool CanAttack { get; private set; }
@@ -40,17 +41,8 @@ public class EnemyShoot : MonoBehaviour
 
     private void Update()
     {
-        /*if (timerCurrentTime > 0)
-        {
-            timerCurrentTime -= Time.deltaTime;
-        }
-        else
-        {
-            TryShootPlayer();
-            timerCurrentTime = TIMER_MAX_TIME;
-        }*/
 
-        if (_alive == false)
+        if (dead == true)
         {
             Destroy(gameObject);
         }
@@ -83,7 +75,7 @@ public class EnemyShoot : MonoBehaviour
         {
             Invoke("ResetShot", timeBetweenShooting);
             allowInvoke = false;
-            playerRb.AddForce(-direction.normalized * recoilForce, ForceMode.Impulse);
+            
         }
     }
 

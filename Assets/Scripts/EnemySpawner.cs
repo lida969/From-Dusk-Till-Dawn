@@ -28,7 +28,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (_currentSpawnTimer >= _spawnInterval)
         {
-            if (_player.transform.position.x >= point.x && countEnemies>=0)
+            if (_player.transform.position.x >= point.x && countEnemies>0)
             {
                 Spawner();
                 countEnemies--;
@@ -45,8 +45,8 @@ private void Spawner()
         Quaternion rotation = Quaternion.Euler(0, -90, 0);
         _enemyPos.rotation = rotation;
         Destroy(_position);
-        Instantiate(_enemyPrefab, _enemyPos.position, Quaternion.identity);
-        this.gameObject.SetActive(true);
+        var enemy = Instantiate(_enemyPrefab, _enemyPos.position, Quaternion.identity);
+        enemy.SetActive(true);
 
 
     }
