@@ -8,7 +8,7 @@ public class PlayerMove : MonoBehaviour
     public float speed = 8f;
     
    
-    private const float TIMER_MAX_TIME = 14f;
+    private const float TIMER_MAX_TIME = 35f;
     private float timerCurrentTime = TIMER_MAX_TIME; 
 
     void Update()

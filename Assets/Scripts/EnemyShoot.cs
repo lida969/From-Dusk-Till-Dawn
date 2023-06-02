@@ -11,27 +11,17 @@ public class EnemyShoot : MonoBehaviour
     public GameObject bullet;
     public EnemyHealth dead;
 
-
     private float _timer;
-    public float timeBetweenShooting = 1f; // <-- Added this line
-    public float breakTime = 3f; // <-- Added this line
-    /*public float timeBetweenShooting;*/
-    public bool allowInvoke = true;
+    public float timeBetweenShooting = 1f;
+    public float breakTime = 3f;
 
-    private const float TIMER_MAX_TIME = 80000f;
-    private float timerCurrentTime = TIMER_MAX_TIME;
-
-    
-    public float recoilForce;
-    bool readyToShoot;
-    public bool CanAttack { get; private set; }
+    private bool _readyToShoot;
+    private float _timerCountdown;
     public float AttackRange => _shotRange;
-
-    public bool _alive = true;
 
     private void Awake()
     {
-        readyToShoot = true;
+        _readyToShoot = true;
     }
 
     private void Start()
@@ -39,28 +29,40 @@ public class EnemyShoot : MonoBehaviour
         _player = FindObjectOfType<Player>();
     }
 
-    private void Update()
+    public void TryShootPlayer()
     {
 
-        if (dead == true)
+        if (_readyToShoot)
         {
-            Destroy(gameObject);
-        }
-
-        if (breakTime <= 0)
-        {
-            TryShootPlayer();
-            breakTime = 1f;
+            if (_timerCountdown <= 0)
+            {
+                ShootPlayer();
+                _timerCountdown = timeBetweenShooting;
+                _readyToShoot = false;
+            }
+            else
+            {
+                _timerCountdown -= Time.deltaTime;
+            }
         }
         else
         {
-            breakTime -= Time.deltaTime;
+            if (breakTime <= 0)
+            {
+                _readyToShoot = true;
+                breakTime = 1f;
+            }
+            else
+            {
+                breakTime -= Time.deltaTime;
+            }
         }
     }
-    public void TryShootPlayer()
-    {
-        readyToShoot = false;
 
+    
+
+    private void ShootPlayer()
+    {
         Ray ray = new Ray(enemyGunPoint.position, enemyGunPoint.forward);
         RaycastHit hit;
         Vector3 targetPoint;
@@ -71,17 +73,8 @@ public class EnemyShoot : MonoBehaviour
         Vector3 direction = targetPoint - enemyGunPoint.position;
         GameObject currentBullet = Instantiate(bullet, enemyGunPoint);
 
-        if (allowInvoke)
-        {
-            Invoke("ResetShot", timeBetweenShooting);
-            allowInvoke = false;
-            
-        }
-    }
-
-    private void ResetShot()
-    {
-        readyToShoot = true;
-        allowInvoke = true;
+        // Reset the shooting readiness after shooting
+        _readyToShoot = false;
+        _timerCountdown = timeBetweenShooting;
     }
 }

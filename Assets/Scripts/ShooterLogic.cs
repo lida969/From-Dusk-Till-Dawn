@@ -8,14 +8,15 @@ public class ShooterLogic : MonoBehaviour
     [SerializeField] public Player _player;
     private EnemyStates _currentState;
     Vector3 _newPos;
-    private EnemyHealth dead;
+    public GameObject _pistol;
+    private EnemyHealth _dead;
     public GameObject _prefab;
     
 
     void Start()
     {
         _player = FindObjectOfType<Player>();
-
+        _dead = GetComponent<EnemyHealth>();
         _currentState = EnemyStates.Idle; //бездействие 
     }
 
@@ -29,6 +30,7 @@ public class ShooterLogic : MonoBehaviour
 
                 break;
             case EnemyStates.Shooting:
+
                 if (Vector3.Distance(gameObject.transform.position, _player.transform.position) < _enemyShoot.AttackRange)
                 {
                     _enemyShoot.TryShootPlayer();
@@ -41,10 +43,7 @@ public class ShooterLogic : MonoBehaviour
         }
         var _playerPos = _player.transform.position;
         transform.LookAt(new Vector3(_playerPos.x, transform.position.y, _playerPos.z));
-        if (dead == true)
-        {
-            _prefab.SetActive(false);
-        }
+        
     }
 
     public enum EnemyStates
