@@ -1,30 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
-public class Cube : MonoBehaviour
+public class zvuc : MonoBehaviour
 {
-    private const float TIMER_MAX_TIME = 34f;
+    private const float TIMER_MAX_TIME = 36f;
     private float timerCurrentTime = TIMER_MAX_TIME;
-    private TextMesh scoreTXT;
-    private float score;
+    // Start is called before the first frame update
     void Start()
     {
-        scoreTXT = GetComponent<TextMesh>();
+        
     }
 
     void Update()
     {
         if (timerCurrentTime > 0)
         {
-            score = timerCurrentTime;
-            scoreTXT.text = "START IN: " + score;
+
             timerCurrentTime -= Time.deltaTime;
         }
         else
         {
-           Destroy(gameObject);
+            
         }
     }
 }

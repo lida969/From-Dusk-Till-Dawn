@@ -29,19 +29,32 @@ public class ShootingLeftHand : MonoBehaviour
     public bool allowInvoke = true;
     private bool triggerPressed = false;
     private bool t;
-
+    private const float TIMER_MAX_TIME = 36f;
+    private float timerCurrentTime = TIMER_MAX_TIME;
+    private AudioSource _audio;
+    
     private void Awake()
     {
         bulletsLeft = magazineSize;
         readyToShoot = true;
+        _audio = GetComponent<AudioSource>();
     }
 
     private void Update()
     {
-        MyInput();
+        if (timerCurrentTime > 0)
+        {
 
-        if (ammunitionDisplay != null)
-            ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
+            timerCurrentTime -= Time.deltaTime;
+        }
+        else
+        {
+            MyInput();
+
+            if (ammunitionDisplay != null)
+                ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
+        }
+        
     }
     virtual protected void MyInput()
     {
@@ -96,6 +109,7 @@ public class ShootingLeftHand : MonoBehaviour
         }
         if (bulletsShot < bulletsPerTap && bulletsLeft > 0)
             Invoke("Shoot", timeBetweenShots);
+        _audio.Play();
     }
     private void ResetShot()
     {
